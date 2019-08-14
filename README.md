@@ -10,7 +10,8 @@ To install this plugin, just place the entire directory under
 /opt/cantemo/portal/portal/plugins in your portal installation and then run
 
 ```
-  python manage.py syncdb
+  python manage.py makemigrations GoogleAnalyticsPlugin
+  python manage.py migrate GoogleAnalyticsPlugin
 ```
 
 to install all the models followed by

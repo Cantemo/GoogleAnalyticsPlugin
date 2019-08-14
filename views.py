@@ -5,12 +5,13 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from portal.generic.baseviews import ClassView
+from .forms import GoogleAnalyticsForm
+from .models import GoogleAnalyticsSettings
+from django.core.exceptions import ObjectDoesNotExist
+
 import logging
 log = logging.getLogger(__name__)
 
-from forms import GoogleAnalyticsForm
-from models import GoogleAnalyticsSettings
-from django.core.exceptions import ObjectDoesNotExist
 
 class GoogleAnalyticsView(ClassView):
     """ Update the settings for the Google Analytics plugin
@@ -28,7 +29,7 @@ class GoogleAnalyticsView(ClassView):
         if self.request.method == 'POST':
             # If this is a POST it means the user pressed submit, so we update the database.
             form = GoogleAnalyticsForm(self.request.POST, instance=obj)
-            if form.is_valid(): # All validation rules pass
+            if form.is_valid():  # All validation rules pass
                 ctx['form'] = form
                 form.save()
         else:
