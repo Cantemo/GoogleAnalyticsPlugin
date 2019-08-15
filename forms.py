@@ -3,7 +3,8 @@
 """
 
 from django.forms import ModelForm
-from models import GoogleAnalyticsSettings
+from .models import GoogleAnalyticsSettings
+
 
 # A model form which deferrs everything to the GoogleAnalyticsSettings model
 class GoogleAnalyticsForm(ModelForm):
@@ -12,4 +13,4 @@ class GoogleAnalyticsForm(ModelForm):
 
     class Meta:
         model = GoogleAnalyticsSettings
-
+        fields = '__all__'

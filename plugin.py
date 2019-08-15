@@ -9,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import logging
 log = logging.getLogger(__name__)
 
+
 # Add extra urls which are defined in urls.py
 class AnalyticsPluginURL(Plugin):
     """ Adds extra URLS for the Google Analytics plugin.
@@ -23,8 +24,10 @@ class AnalyticsPluginURL(Plugin):
         self.plugin_guid = '034A8676-F8B9-4946-BD82-0E78248F84A5'
         log.debug("Initiated AnalyticsPluginURL")
 
+
 # Register the URL plugin
-pluginurls = AnalyticsPluginURL()
+AnalyticsPluginURL()
+
 
 # Add the google snippet to each page, via the header_css_js plugin block
 class AnalyticsPluginBlock(Plugin):
@@ -39,7 +42,7 @@ class AnalyticsPluginBlock(Plugin):
 
     # Function called by the plugin framework. Returns the rendered template.
     def return_string(self, tagname, *args):
-        from models import GoogleAnalyticsSettings
+        from .models import GoogleAnalyticsSettings
         ret = " "
         # Workaround for django lacking a singleton model. Always access object with id=1
         try:
@@ -50,9 +53,11 @@ class AnalyticsPluginBlock(Plugin):
             if obj.google_id and obj.google_id != "":
                 ret = 'analytics/google_snippet.html'
 
-        return {'guid':self.plugin_guid, 'template': ret, 'context' : {'google_id' : obj.google_id} }
+        return {'guid': self.plugin_guid, 'template': ret, 'context': {'google_id': obj.google_id}}
 
-pluginblock = AnalyticsPluginBlock() 
+
+AnalyticsPluginBlock()
+
 
 # Add an entry to the admin menu
 class AnalyticsAdminMenuPlugin(Plugin):
@@ -67,9 +72,11 @@ class AnalyticsAdminMenuPlugin(Plugin):
         
     # Returns the template file
     def return_string(self, tagname, *args):
-        return {'guid':self.plugin_guid, 'template':'analytics/navigation_admin.html' }
+        return {'guid': self.plugin_guid, 'template': 'analytics/navigation_admin.html'}
 
-pluginblock = AnalyticsAdminMenuPlugin() 
+
+AnalyticsAdminMenuPlugin()
+
 
 class AnalyticsAdminLeftPanePlugin(Plugin):
     """ adds a menu item to the admin screen
@@ -83,6 +90,5 @@ class AnalyticsAdminLeftPanePlugin(Plugin):
     def return_string(self, tagname, *args):
         return {'guid': self.plugin_guid, 'template': 'analytics/admin_leftpanel_pane.html'}
 
-pluginblock = AnalyticsAdminLeftPanePlugin()
 
-
+AnalyticsAdminLeftPanePlugin()
